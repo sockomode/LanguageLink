@@ -25,14 +25,13 @@ class Profile:
     matches = []
     likes = []
 
-    def __init__(self, name, spokenLanguages, learningLanguage, country, email, password, image, age, phoneNumber, netCode, matches):
+    def __init__(self, name, spokenLanguages, learningLanguage, country, email, password, age, phoneNumber, netCode, matches):
         self.name = name
         self.spokenLanguages = spokenLanguages
         self.learningLanguage = learningLanguage
         self.country = country
         self.email = email
         self.password = password
-        self.image = get_image()
         self.age = age
         self.phoneNumber = phoneNumber
         self.netCode = netCode
