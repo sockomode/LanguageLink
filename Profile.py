@@ -13,7 +13,7 @@ def get_image():
 
 class Profile:
     name = ''
-    spokenLanguage = ''
+    spokenLanguages = []
     learningLanguage = ''
     country = ''
     email = ''
@@ -23,3 +23,18 @@ class Profile:
     phoneNumber = 0
     netCode = 0
     matches = []
+    likes = []
+
+    def __init__(self, name, spokenLanguages, learningLanguage, country, email, password, image, age, phoneNumber, netCode, matches):
+        self.name = name
+        self.spokenLanguages = spokenLanguages
+        self.learningLanguage = learningLanguage
+        self.country = country
+        self.email = email
+        self.password = password
+        self.image = get_image()
+        self.age = age
+        self.phoneNumber = phoneNumber
+        self.netCode = netCode
+        self.matches = matches
+
