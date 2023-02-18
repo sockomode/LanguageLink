@@ -9,7 +9,7 @@ frenSpeak = []
 spanSpeak = []
 italSpeak = []
 def sortProf(sortMe):
-    for lang in sortMe.spokenLanguage:
+    for lang in sortMe[1]:
         if lang == 'English':
             engSpeak.append(sortMe)
         if lang == 'Chinese':
@@ -69,6 +69,6 @@ def toJson(type):
         return italian
 
 spoken = ['German', 'English']
-test = Profile('Alec', spoken, 'Japanese', 'USA', 22, 8057967740, 'A43DKF32KS')
+test = Profile.Profile('Alec', spoken, 'Japanese', 'USA', 'alecjsommerhauser@gmail.com', 'Password',  22, 8057967740, 'A43DKF32KS')
 sortProf(profToList(test))
 print(toJson('German'))
