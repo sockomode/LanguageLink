@@ -4,7 +4,7 @@ import json
 engSpeak = []
 chiSpeak = []
 japanSpeak = []
-gerSpeak = []
+gerSpeak= []
 frenSpeak = []
 spanSpeak = []
 italSpeak = []
