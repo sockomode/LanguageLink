@@ -14,6 +14,7 @@ class Account:
     email = ''
     password = ''
     netCode = ''
+    ipaddress = ''
 
 class Profile(Account):
     name = ''
