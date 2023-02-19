@@ -5,9 +5,11 @@ import socket
 import Messenger
 import functions
 import sqlite3
-import threading
-import time
+import json
 import queue
+import requests
+import random
+import string
 
 class Account:
     email = ''
@@ -39,8 +41,8 @@ class Profile(Account):
         self.password = password
         self.age = age
         self.phoneNumber = phoneNumber
-        self.netCode = netCode
         self.ipaddress = socket.gethostbyname(socket.gethostname())
+        self.generateNetCode()
 
     def get_image(self):
         root = tk.Tk()
@@ -113,7 +115,64 @@ class Profile(Account):
             if functions.pullJsons(lang)[self.itr].netCode == like.netCode:
                 self.itr+=1
                 self.getProf(lang)
+            for dislike in self.dislikes:
+                if functions.pullJsons(lang)[self.itr].netCode == dislike.netCode:
+                    self.itr += 1
+                    self.getProf(lang)
+            if functions.pullJsons(lang)[self.itr].netCode == self.netCode:
+                self.itr += 1
+                self.getProf(lang)
             else:
                 self.itr+=1
                 return functions.pullJsons(lang)[(self.itr)-1]
 
+    def createAccount(self):
+        url = 'https://api.jsonbin.io/v3/b/63f1e90eebd26539d0811cb8/latest'
+        headers = {
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = requests.get(url, json=None, headers=headers)
+        accList = json.dumps(data)
+        if accList['glosssary']['title'] == 'example glossary':
+            accList = []
+            nAcc = [self.netCode, self.email, self.password, self.ipaddress]
+            accList.append(nAcc)
+            url = 'https://api.jsonbin.io/v3/b/63f1e90eebd26539d0811cb8'
+            headers = {
+                'Content-Type': 'application/json',
+                'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+            }
+            data = json.dumps(accList)
+            requests.put(url, json=data, headers=headers)
+        else:
+            nAcc = [self.netCode, self.email, self.password, self.ipaddress]
+            accList.append(nAcc)
+            url = 'https://api.jsonbin.io/v3/b/63f1e90eebd26539d0811cb8'
+            headers = {
+                'Content-Type': 'application/json',
+                'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+            }
+            data = json.dumps(accList)
+            requests.put(url, json=data, headers=headers)
+
+    def generateNetCode(self):
+        url = 'https://api.jsonbin.io/v3/b/63f1e90eebd26539d0811cb8/latest'
+        headers = {
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = requests.get(url, json=None, headers=headers)
+        accList = json.dumps(data)
+        taken = False
+        characters = string.ascii_letters + string.digits
+        self.netCode = ''.join(random.choice(characters) for i in range(10))
+        for acc in accList:
+            if acc == self.netCode:
+                taken = True
+                break
+        while taken == True:
+            self.netCode = ''.join(random.choice(characters) for i in range(10))
+            for acc in accList:
+                if acc == self.netCode:
+                    taken = True
+                    break
+            taken = False
