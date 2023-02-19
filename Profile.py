@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 from PIL import Image
-
+import socket
 
 def get_image():
     root = tk.Tk()
@@ -37,3 +37,4 @@ class Profile(Account):
         self.age = age
         self.phoneNumber = phoneNumber
         self.netCode = netCode
+        self.ipaddress = socket.gethostbyname(socket.gethostname())
