@@ -38,6 +38,8 @@ def profToList(prof):
     rList.append(prof.phoneNumber)
     rList.append(prof.netCode)
     rList.append(prof.likes)
+    rList.append(prof.dislikes)
+    rList.append(prof.matches)
     return rList
 def toJson(type):
     if (type == 'Japanese'):
@@ -148,19 +150,9 @@ def pullJsons(lang):
         data = requests.get(url, json=None, headers=headers)
         return json.dumps(data)
 
-def like_profile(profile1, profile2):
-    if profile1.email == profile2.email:
-        print("Error: You cannot like your own profile")
-        return
-
-    profile1.likes.append(profile2)
-    print("{profile1.name} liked {profile2.name}")
-
 def match_profiles(profile1, profile2):
     if profile1 in profile2.likes and profile2 in profile1.likes:
-        print(f"{profile1.name} and {profile2.name} have matched!")
         port = random.randint(1024, 65000)
-        print(f"A port number has been generated for their connection: {port}")
         profile1.matches.append(profile2)
         profile2.matches.append(profile1)
     

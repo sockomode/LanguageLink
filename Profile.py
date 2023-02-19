@@ -9,6 +9,8 @@ import json
 import queue
 import requests
 import random
+import threading
+import time
 import string
 
 class Account:
@@ -30,6 +32,7 @@ class Profile(Account):
     conversations = []
     conn = sqlite3.connect('convos.db')
     c = conn.cursor()
+    index = 0
     itr = 0
 
     def __init__(self, name, spokenLanguages, learningLanguage, country, email, password, age, phoneNumber, netCode):
@@ -43,6 +46,11 @@ class Profile(Account):
         self.phoneNumber = phoneNumber
         self.ipaddress = socket.gethostbyname(socket.gethostname())
         self.generateNetCode()
+        index = len(functions.pullJsons(spokenLanguages[0]))
+        functions.sortProf(functions.profToList(self))
+        thread = threading.Thread(target=self.findMatch())
+        thread.daemon = True
+        thread.start()
 
     def get_image(self):
         root = tk.Tk()
@@ -103,28 +111,28 @@ class Profile(Account):
                 messInst2 = messInst[indexId]
             else:
                 messInst2 = []
-            convo = Messenger.Conversation(row[0], row[1], messInst2)
+            convo = Messenger.Conversation(row[0], row[1], messInst2, self.learningLanguage)
             self.conversations.append(convo)
 
     profQueue = queue.Queue()
     cQueue = queue.Queue()
-    def getProf(self, lang):
-        if (self.itr >= len(functions.pullJsons(lang))):
+    def getProf(self):
+        if (self.itr >= len(functions.pullJsons(self.learningLanguage))):
             return 'Empty'
         for like in self.likes:
-            if functions.pullJsons(lang)[self.itr].netCode == like.netCode:
+            if functions.pullJsons(self.learningLanguage)[self.itr].netCode == like.netCode:
                 self.itr+=1
-                self.getProf(lang)
+                self.getProf(self.learningLanguage)
             for dislike in self.dislikes:
-                if functions.pullJsons(lang)[self.itr].netCode == dislike.netCode:
+                if functions.pullJsons(self.learningLanguage)[self.itr].netCode == dislike.netCode:
                     self.itr += 1
-                    self.getProf(lang)
-            if functions.pullJsons(lang)[self.itr].netCode == self.netCode:
+                    self.getProf(self.learningLanguage)
+            if functions.pullJsons(self.learningLanguage)[self.itr].netCode == self.netCode:
                 self.itr += 1
-                self.getProf(lang)
+                self.getProf(self.learningLanguage)
             else:
                 self.itr+=1
-                return functions.pullJsons(lang)[(self.itr)-1]
+                return functions.pullJsons(self.learningLanguage)[(self.itr)-1]
 
     def createAccount(self):
         url = 'https://api.jsonbin.io/v3/b/63f1e90eebd26539d0811cb8/latest'
@@ -176,3 +184,25 @@ class Profile(Account):
                     taken = True
                     break
             taken = False
+
+    def likeProfile(self, prof):
+        self.likes.append(prof)
+        for like in prof[7]:
+            if (self.netCode == like[6]):
+                self.matchProf(like)
+    def matchProf(self, mem):
+        self.matches.append(mem)
+        hold = functions.pullJsons(self.spokenLanguages[0])
+        hold[self.index] = functions.profToList(self)
+        functions.toJson(self.spokenLanguages[0])
+
+    #thread this bad boy
+    def findMatch(self):
+        while True:
+            time.sleep(2)
+            if self.matches != functions.pullJsons(self.spokenLanguages[0])[9]:
+                curLen = len(self.matches)
+                port = random.randint(1024, 65000)
+                self.matches.append(functions.pullJsons(self.spokenLanguages[0])[9][curLen][6])
+                convo = Messenger.Conversation(self.ipaddress, port, functions.pullJsons(self.spokenLanguages[0])[9][curLen])
+                self.conversations.append(convo)
