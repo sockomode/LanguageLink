@@ -1,5 +1,7 @@
 import Profile
 import json
+import requests
+
 
 engSpeak = []
 chiSpeak = []
@@ -18,7 +20,6 @@ def sortProf(sortMe):
             japanSpeak.append(sortMe)
         if lang == 'German':
             gerSpeak.append(sortMe)
-            print('AYO')
         if lang == 'French':
             frenSpeak.append(sortMe)
         if lang == 'Spanish':
@@ -35,41 +36,117 @@ def profToList(prof):
     rList.append(prof.age)
     rList.append(prof.phoneNumber)
     rList.append(prof.netCode)
+    rList.append(prof.likes)
     return rList
 def toJson(type):
-    if (type == 'All'):
-        english = json.dumps(engSpeak)
-        chinese = json.dumps(chiSpeak)
-        japanese = json.dumps(japanSpeak)
-        german = json.dumps(gerSpeak)
-        french = json.dumps(frenSpeak)
-        spanish = json.dumps(spanSpeak)
-        italian = json.dumps(italSpeak)
-        rList = [english, chinese, japanese, german, french, spanish, italian]
-    elif (type == 'English'):
-        english = json.dumps(engSpeak)
-        return english
-    elif (type == 'Chinese'):
-        chinese = json.dumps(chiSpeak)
-        return chinese
-    elif (type == 'Japanese'):
-        japanese = json.dumps(japanSpeak)
-        return japanese
+    if (type == 'Japanese'):
+        url = 'https://api.jsonbin.io/v3/b/63f18a85ace6f33a22e12bce'
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = japanSpeak
+        requests.put(url, json=data, headers=headers)
+    if (type == 'Chinese'):
+        url = 'https://api.jsonbin.io/v3/b/63f18aa1ebd26539d080fdb3'
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = chiSpeak
+        requests.put(url, json=data, headers=headers)
     elif (type == 'German'):
-        german = json.dumps(gerSpeak)
-        return german
+        url = 'https://api.jsonbin.io/v3/b/63f18a90c0e7653a057a3d8d'
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = gerSpeak
+        requests.put(url, json=data, headers=headers)
     elif (type == 'French'):
-        french = json.dumps(frenSpeak)
-        return french
+        url = 'https://api.jsonbin.io/v3/b/63f18aabace6f33a22e12bdc'
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = frenSpeak
+        requests.put(url, json=data, headers=headers)
     elif (type == 'Spanish'):
-        spanish = json.dumps(spanSpeak)
-        return spanish
+        url = 'https://api.jsonbin.io/v3/b/63f18ab3c0e7653a057a3d9c'
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = spanSpeak
+        requests.put(url, json=data, headers=headers)
     elif (type == 'Italian'):
-        italian = json.dumps(italSpeak)
-        return italian
+        url = 'https://api.jsonbin.io/v3/b/63f18abac0e7653a057a3da0'
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = italSpeak
+        requests.put(url, json=data, headers=headers)
+    elif (type == 'English'):
+        url = 'https://api.jsonbin.io/v3/b/63f18a99ace6f33a22e12bd5'
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = engSpeak
+        requests.put(url, json=data, headers=headers)
+
+def pullJsons(lang):
+    if (lang == 'English'):
+        url = 'https://api.jsonbin.io/v3/b/63f18a99ace6f33a22e12bd5/latest'
+        headers = {
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = requests.get(url, json=None, headers=headers)
+        return json.dumps(data)
+    elif (lang == 'Spanish'):
+        url = 'https://api.jsonbin.io/v3/b/63f18ab3c0e7653a057a3d9c/latest'
+        headers = {
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = requests.get(url, json=None, headers=headers)
+        return json.dumps(data)
+    elif (lang == 'French'):
+        url = 'https://api.jsonbin.io/v3/b/63f18aabace6f33a22e12bdc/latest'
+        headers = {
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = requests.get(url, json=None, headers=headers)
+        return json.dumps(data)
+    elif (lang == 'Japanese'):
+        url = 'https://api.jsonbin.io/v3/b/63f18a85ace6f33a22e12bce/latest'
+        headers = {
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = requests.get(url, json=None, headers=headers)
+        return json.dumps(data)
+    elif (lang == 'Chinese'):
+        url = 'https://api.jsonbin.io/v3/b/63f18aa1ebd26539d080fdb3/latest'
+        headers = {
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = requests.get(url, json=None, headers=headers)
+        return json.dumps(data)
+    elif (lang == 'Italian'):
+        url = 'https://api.jsonbin.io/v3/b/63f18abac0e7653a057a3da0/latest'
+        headers = {
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = requests.get(url, json=None, headers=headers)
+        return json.dumps(data)
+    elif (lang == 'German'):
+        url = 'https://api.jsonbin.io/v3/b/63f18a90c0e7653a057a3d8d/latest'
+        headers = {
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = requests.get(url, json=None, headers=headers)
+        return json.dumps(data)
 
 spoken = ['German', 'English']
 test = Profile.Profile('Alec', spoken, 'Japanese', 'USA', 'alecjsommerhauser@gmail.com', 'Password',  22, 8057967740, 'A43DKF32KS')
 sortProf(profToList(test))
-print(toJson('German'))
-#let me commit
