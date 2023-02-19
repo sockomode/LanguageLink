@@ -1,0 +1,180 @@
+<BrowsePage>:
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 10, 10, 10, 300
+        MDLabel:
+            text: "Match screen"
+            pos_hint: {"center_y": .5}
+            halign: "center"
+
+        MDRoundFlatButton:
+            text: "Test like"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_press: app.give_like()
+
+    NavBar:
+        id: navbar
+        size_hint: .85, .1
+        pos_hint: {"center_x": .5, "center_y": .1}
+        elevation: 2
+        md_bg_color: 1, 1, 1, 1
+        radius: {16}
+        MDGridLayout:
+            cols: 3
+            size_hint_x: .9
+            spacing: 20
+            pos_hint: {"center_x": .6, "center_y": .4}
+            MDIconButton:
+                id: nav_icon1
+                icon: "account-search"
+                ripple_scale: 0
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: 1, 0, 0, 1
+                on_release:
+                    app.switch_screen("browsepage")
+            MDIconButton:
+                id: nav_icon2
+                icon: "heart"
+                ripple_scale: 0
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1
+                on_release:
+                    app.switch_screen("connectionspage")
+            MDIconButton:
+                id: nav_icon3
+                icon: "account"
+                ripple_scale: 0
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1
+                on_release:
+                    app.switch_screen("profilepage")
+
+
+
+
+<ConnectionsPage>:
+    MDLabel:
+        text: "Connections"
+        pos_hint: {"center_y": .5}
+        halign: "center"
+
+    NavBar:
+        id: navbar
+        size_hint: .85, .1
+        pos_hint: {"center_x": .5, "center_y": .1}
+        elevation: 2
+        md_bg_color: 1, 1, 1, 1
+        radius: {16}
+        MDGridLayout:
+            cols: 3
+            size_hint_x: .9
+            spacing: 20
+            pos_hint: {"center_x": .6, "center_y": .4}
+            MDIconButton:
+                id: nav_icon1
+                icon: "account-search"
+                ripple_scale: 0
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1
+                on_release:
+                    app.switch_screen("browsepage")
+            MDIconButton:
+                id: nav_icon2
+                icon: "heart"
+                ripple_scale: 0
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: 1, 0, 0, 1
+                on_release:
+                    app.switch_screen("connectionspage")
+            MDIconButton:
+                id: nav_icon3
+                icon: "account"
+                ripple_scale: 0
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1
+                on_release:
+                    app.switch_screen("profilepage")
+
+
+
+
+<ProfilePage>:
+    MDFloatLayout:
+        md_bg_color: rgba(246, 250, 255, 255)
+        ProfileCard:
+            size_hint_y: .65
+            pos_hint: {"center_y": .7}
+            elevation: 2
+            md_bg_color: 1, 1, 1, 1
+            radius: [0, 0, 20, 20]
+            MDIconButton:
+                icon: "arrow-left"
+                pos_hint: {"center_y": .91}
+                user_font_size: "20sp"
+                theme_text_color: "Custom"
+                text_color: rgba(71, 92, 119, 255)
+            MDIconButton:
+                icon: "dots-vertical"
+                pos_hint: {"center_x": .93, "center_y": .91}
+                user_font_size: "20sp"
+                theme_text_color: "Custom"
+                text_color: rgba(71, 92, 119, 255)
+            MDLabel:
+                text: "My Profile"
+                font_size: "20sp"
+                pos_hint: {"center_x": .56, "center_y": .82}
+                color: rgba(71, 92, 119, 255)
+
+    MDLabel:
+        text: "Profile"
+        pos_hint: {"center_y": .5}
+        halign: "center"
+
+    NavBar:
+        id: navbar
+        size_hint: .85, .1
+        pos_hint: {"center_x": .5, "center_y": .1}
+        elevation: 2
+        md_bg_color: 1, 1, 1, 1
+        radius: {16}
+        MDGridLayout:
+            cols: 3
+            size_hint_x: .9
+            spacing: 20
+            pos_hint: {"center_x": .6, "center_y": .4}
+            MDIconButton:
+                id: nav_icon1
+                icon: "account-search"
+                ripple_scale: 0
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1
+                on_release:
+                    app.switch_screen("browsepage")
+            MDIconButton:
+                id: nav_icon2
+                icon: "heart"
+                ripple_scale: 0
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1
+                on_release:
+                    app.switch_screen("connectionspage")
+            MDIconButton:
+                id: nav_icon3
+                icon: "account"
+                ripple_scale: 0
+                user_font_size: "30sp"
+                theme_text_color: "Custom"
+                text_color: 1, 0, 0, 1
+                on_release:
+                    app.switch_screen("profilepage")
+
