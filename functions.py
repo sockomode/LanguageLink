@@ -6,7 +6,7 @@ import requests
 engSpeak = []
 chiSpeak = []
 japanSpeak = []
-gerSpeak= []
+gerSpeak = []
 frenSpeak = []
 spanSpeak = []
 italSpeak = []
