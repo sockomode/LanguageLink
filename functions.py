@@ -1,9 +1,7 @@
 import Profile
 import json
 import requests
-from io import BytesIO
-from PIL import Image
-import base64
+
 
 engSpeak = []
 chiSpeak = []
@@ -12,10 +10,6 @@ gerSpeak = []
 frenSpeak = []
 spanSpeak = []
 italSpeak = []
-def convert_to_image(image_str):
-    decoded_image = base64.b64decode(image_str)
-    image = Image.open(BytesIO(decoded_image))
-    return image
 def sortProf(sortMe):
     for lang in sortMe[1]:
         if lang == 'English':
@@ -43,7 +37,6 @@ def profToList(prof):
     rList.append(prof.phoneNumber)
     rList.append(prof.netCode)
     rList.append(prof.likes)
-    rList.append(prof.ipaddress)
     return rList
 def toJson(type):
     if (type == 'Japanese'):
@@ -154,7 +147,21 @@ def pullJsons(lang):
         data = requests.get(url, json=None, headers=headers)
         return json.dumps(data)
 
+ def like_profile(profile1, profile2):
+    if profile1.email == profile2.email:
+        print("Error: You cannot like your own profile")
+        return
+
+    profile1.likes.append(profile2)
+    print("{profile1.name} liked {profile2.name}")
+
+def match(profile1, profile2):
+    if profile1 in profile2.likes and profile2 in profile1.likes:
+        profile1.matches.append(profile2)
+        profile2.matches.append(profile1)
+    
 
 spoken = ['German', 'English']
 test = Profile.Profile('Alec', spoken, 'Japanese', 'USA', 'alecjsommerhauser@gmail.com', 'Password',  22, 8057967740, 'A43DKF32KS')
+test1 = Profile.Profile('Elijah', spoken, 'Chinese', 'USA', 'eli123013@gmail.com', 'Password',  19 , 1234567890, 'XD4LDR15FF')
 sortProf(profToList(test))
