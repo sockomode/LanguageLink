@@ -1,8 +1,5 @@
-import Profile
 import json
 import requests
-import random
-
 
 engSpeak = []
 chiSpeak = []
@@ -11,6 +8,36 @@ gerSpeak = []
 frenSpeak = []
 spanSpeak = []
 italSpeak = []
+
+def fill():
+    if pullJsons('English')['glosssary']['title'] == 'example glossary':
+        engSpeak = []
+    else:
+        engSpeak = pullJsons('English')
+    if pullJsons('Chinese')['glosssary']['title'] == 'example glossary':
+        chiSpeak = []
+    else:
+        chiSpeak = pullJsons('Chinese')
+    if pullJsons('Japanese')['glosssary']['title'] == 'example glossary':
+        japanSpeak = []
+    else:
+        japanSpeak = pullJsons('Japanese')
+    if pullJsons('German')['glosssary']['title'] == 'example glossary':
+        gerSpeak = []
+    else:
+        gerSpeak = pullJsons('German')
+    if pullJsons('French')['glosssary']['title'] == 'example glossary':
+        frenSpeak = []
+    else:
+        frenSpeak = pullJsons('French')
+    if pullJsons('Spanish')['glosssary']['title'] == 'example glossary':
+        spanSpeak = []
+    else:
+        spanSpeak = pullJsons('Spanish')
+    if pullJsons('Italian')['glosssary']['title'] == 'example glossary':
+        italSpeak = []
+    else:
+        italSpeak = pullJsons('Italian')
 def sortProf(sortMe):
     for lang in sortMe[1]:
         if lang == 'English':
@@ -40,6 +67,7 @@ def profToList(prof):
     rList.append(prof.likes)
     rList.append(prof.dislikes)
     rList.append(prof.matches)
+    rList.append(prof.image)
     return rList
 def toJson(type):
     if (type == 'Japanese'):
@@ -149,15 +177,3 @@ def pullJsons(lang):
         }
         data = requests.get(url, json=None, headers=headers)
         return json.dumps(data)
-
-def match_profiles(profile1, profile2):
-    if profile1 in profile2.likes and profile2 in profile1.likes:
-        port = random.randint(1024, 65000)
-        profile1.matches.append(profile2)
-        profile2.matches.append(profile1)
-    
-
-spoken = ['German', 'English']
-test = Profile.Profile('Alec', spoken, 'Japanese', 'USA', 'alecjsommerhauser@gmail.com', 'Password',  22, 8057967740, 'A43DKF32KS')
-test1 = Profile.Profile('Elijah', spoken, 'Chinese', 'USA', 'eli123013@gmail.com', 'Password',  19 , 1234567890, 'XD4LDR15FF')
-sortProf(profToList(test))

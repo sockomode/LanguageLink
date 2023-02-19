@@ -21,6 +21,7 @@ class Account:
 
 class Profile(Account):
     name = ''
+    image = ''
     spokenLanguages = []
     learningLanguage = ''
     country = ''
@@ -162,6 +163,8 @@ class Profile(Account):
             }
             data = json.dumps(accList)
             requests.put(url, json=data, headers=headers)
+        functions.sortProf(self.spokenLanguages[0])
+        functions.toJson(self.spokenLanguages[0])
 
     def generateNetCode(self):
         url = 'https://api.jsonbin.io/v3/b/63f1e90eebd26539d0811cb8/latest'
@@ -190,6 +193,10 @@ class Profile(Account):
         for like in prof[7]:
             if (self.netCode == like[6]):
                 self.matchProf(like)
+
+    def dislikeProfile(self, prof):
+        self.dislikes.append(prof)
+
     def matchProf(self, mem):
         self.matches.append(mem)
         hold = functions.pullJsons(self.spokenLanguages[0])
@@ -206,3 +213,12 @@ class Profile(Account):
                 self.matches.append(functions.pullJsons(self.spokenLanguages[0])[9][curLen][6])
                 convo = Messenger.Conversation(self.ipaddress, port, functions.pullJsons(self.spokenLanguages[0])[9][curLen])
                 self.conversations.append(convo)
+
+    def changeName(self, name):
+        self.name = name
+
+    def changeAge(self, age):
+        self.age = age
+
+    def changeCountry(self, country):
+        self.country = country
