@@ -1,7 +1,9 @@
 import Profile
 import json
 import requests
-import socket
+from io import BytesIO
+from PIL import Image
+import base64
 
 engSpeak = []
 chiSpeak = []
@@ -10,6 +12,10 @@ gerSpeak = []
 frenSpeak = []
 spanSpeak = []
 italSpeak = []
+def convert_to_image(image_str):
+    decoded_image = base64.b64decode(image_str)
+    image = Image.open(BytesIO(decoded_image))
+    return image
 def sortProf(sortMe):
     for lang in sortMe[1]:
         if lang == 'English':
@@ -37,6 +43,7 @@ def profToList(prof):
     rList.append(prof.phoneNumber)
     rList.append(prof.netCode)
     rList.append(prof.likes)
+    rList.append(prof.ipaddress)
     return rList
 def toJson(type):
     if (type == 'Japanese'):
@@ -146,9 +153,6 @@ def pullJsons(lang):
         }
         data = requests.get(url, json=None, headers=headers)
         return json.dumps(data)
-
-def match():
-    pass
 
 
 spoken = ['German', 'English']
