@@ -39,6 +39,13 @@ class Conversation():
         message_thread = threading.Thread(target=self.receiveMessage())
         message_thread.start()
 
+    def __init__ (self, code, port, messlist):
+        self.member = self.profSearch(code)
+        self.portNum = port
+        self.messages = messlist
+        message_thread = threading.Thread(target=self.receiveMessage())
+        message_thread.start()
+
     def sendMessage(self, mess):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         receiver_address = (self.member.ipaddress, self.portNum)
@@ -56,3 +63,7 @@ class Conversation():
             message = data.decode()
             recMess = Message(message, False)
             self.messages.append(recMess)
+
+    #this function will be responsible for searching in order to find a profile
+    def profSearch(self, code):
+        pass
