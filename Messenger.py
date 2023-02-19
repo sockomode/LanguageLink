@@ -1,7 +1,9 @@
 import socket
 import threading
 import datetime
+import json
 import functions
+import requests
 
 class Message():
     text = ''
@@ -37,6 +39,15 @@ class Conversation():
     def __init__(self, mem, port):
         self.member = functions.profToList(mem)
         self.portNum = port
+        url = 'https://api.jsonbin.io/v3/b/63f1e90eebd26539d0811cb8/latest'
+        headers = {
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = requests.get(url, json=None, headers=headers)
+        accList = json.dumps(data)
+        for acc in accList:
+            if acc[0] == mem[6]:
+                self.ip = acc[4]
         message_thread = threading.Thread(target=self.receiveMessage())
         message_thread.start()
 
@@ -44,8 +55,21 @@ class Conversation():
         for mem in functions.pullJsons(llang):
             if mem[6] == code:
                 self.member = mem
+        url = 'https://api.jsonbin.io/v3/b/63f1e90eebd26539d0811cb8/latest'
+        headers = {
+            'X-Master-Key': '$2b$10$IJVhxdyA.TMihLxk.V.vBu/1kMCV2y.xDxMrrlbTwatPnQ105RTxm'
+        }
+        data = requests.get(url, json=None, headers=headers)
+        accList = json.dumps(data)
+        for acc in accList:
+            if acc[0] == code:
+                self.ip = acc[4]
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((self.ip, port))
         self.portNum = port
         self.messages = messlist
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((self.ip, port))
         message_thread = threading.Thread(target=self.receiveMessage())
         message_thread.start()
 
@@ -54,7 +78,7 @@ class Conversation():
         self.portNum = port
         self.member = mem
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((ip, self.portNum))
+        sock.connect((ip, port))
 
 
     #gotta fix the ip thing this dont work
